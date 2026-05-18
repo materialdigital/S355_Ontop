@@ -49,6 +49,7 @@ columns2 = {
 experimentDir = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\tensile_test\02_secondary_data\results_protocols")
 experimentDir = (
 		BASE_DIR
+        / "S355_data"
 		/ "tensile_test"
 		/ "02_secondary_data"
 		/ "results_protocols"

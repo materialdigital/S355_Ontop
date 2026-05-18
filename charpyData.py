@@ -24,6 +24,7 @@ columns = {
 
 primaryDataDir =  (
 		BASE_DIR
+		/ "S355_data"
 		/ "charpy_test"
 		/ "01_primary_data"
 )
