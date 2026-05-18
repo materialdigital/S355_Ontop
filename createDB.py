@@ -3,9 +3,10 @@ import charpyData as chData
 import tensileData as tData
 import pyexcel as p
 from pathlib import Path
+from datetime import datetime, date
 import os
 import sqlite3
-#### generate tables from the specified columns map names ####
+#### generate create table strings from the specified columns map names ####
 def generate_create_table(table_name, column_maps):
 	col_defs = []
 
@@ -29,20 +30,46 @@ CREATE TABLE IF NOT EXISTS {table_name} (
 		"""
 	return sql
 ################################################################################
+def sql_literal(val):
+	if val is None:
+		return "NULL"
+	if isinstance(val, (datetime, date)):
+		return f"'{val}'"
+	if isinstance(val, str):
+		escaped = val.replace("'", "''")
+		return f"'{escaped}'"
+	return str(val)
+
+################################################################################
 def populate_table(table_name, entries, orientation_data):
 	for key, values in entries.items():
 		# first create an entry with key as id
-		id_string = f"INSERT INTO {table_name} (id) VALUES (?)"
-		cursor.execute(id_string, (key,))
+		id_val = sql_literal(key)
+		id_string = f"""
+		INSERT INTO {table_name} (id)
+		VALUES ({id_val});
+		"""
+		sql_file.write(id_string + "\n")
 		# now fill the rest for this row
 		for field, val in values.items():
 			if val == '-' or val == '':
 				continue
-			insert_string = f"UPDATE {table_name} SET {field} = ? WHERE id = ?"
-			cursor.execute(insert_string, (val, key))
+			sql_val = sql_literal(val)
+			sql_key = sql_literal(key)
+			insert_string = f"""
+			UPDATE {table_name}
+			SET {field} = {sql_val}
+			WHERE id = {sql_key};
+			"""
+			sql_file.write(insert_string + "\n")
 		# now the angle to the rolling direction
-		orientation_insert_string = f"UPDATE {table_name} SET orientation = ? WHERE id = ?"
-		cursor.execute(orientation_insert_string, (orientation_data[key], key))
+		orientation_val = sql_literal(orientation_data[key])
+		orientation_insert_string = f"""
+		UPDATE {table_name}
+		SET orientation = {orientation_val}
+		WHERE id = {id_val};
+		"""
+		sql_file.write(orientation_insert_string + "\n")
 
 ################################################################################
 # opens a sheet in a xlsx file and extracts data from the excel table.
@@ -127,11 +154,8 @@ for exp_file, exp_sheets in tData.experimentSheets.items():
 
 # create queries for tables work. Next fill the tables. We need to handle '-' and '' entries and fill NULL instead
 tensile_table_string = generate_create_table("tensile_data", [tData.columns, tData.columns2, tData.experimentFields])
-print(tensile_table_string)
 charpy_table_string = generate_create_table("charpy_data", [chData.columns, chData.primaryDataFields])
-print(charpy_table_string)
 sr_table_string = generate_create_table("sonic_resonance_data", [srData.columns])
-print(sr_table_string)
 
 # add metal sheet to entries
 for key in sonic_resonance_entries:
@@ -142,31 +166,26 @@ for key in tensile_entries:
 	tensile_entries[key]["metal_sheet"] = "sheet1"
 # now that table creation queries are construction we need to fill them with the
 # data from our charpy_entries, sonic_resonance_entries, tensile_entries
-conn = sqlite3.connect(db_path)
-cursor = conn.cursor()
+
+sql_file = open("s355.sql", "w")
 
 # create tables (if not exist)
-cursor.execute(tensile_table_string)
-cursor.execute(charpy_table_string)
-cursor.execute(sr_table_string)
+sql_file.write(tensile_table_string + "\n")
+sql_file.write(charpy_table_string + "\n")
+sql_file.write(sr_table_string + "\n")
+
 # metal sheet table
 sheet_table_string = f"""
 CREATE TABLE IF NOT EXISTS sheet_data (
 	id VARCHAR(16) PRIMARY KEY
 );"""
-cursor.execute(sheet_table_string)
+
+sql_file.write(sheet_table_string + "\n")
 sheet1_string = f"INSERT INTO sheet_data (id) VALUES ('sheet1');"
-cursor.execute(sheet1_string)
+sql_file.write(sheet1_string + "\n")
 
-# fill tables
+# insertion strings
 populate_table("tensile_data", tensile_entries, tData.longitudinal_orientation)
-
-conn.commit()
 populate_table("charpy_data", charpy_entries, chData.longitudinal_orientation)
-conn.commit()
 populate_table("sonic_resonance_data", sonic_resonance_entries, srData.longitudinal_orientation)
-conn.commit()
 
-
-cursor.close()
-conn.close()
