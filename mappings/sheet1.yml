@@ -1,0 +1,178 @@
+prefixes:
+  ex: "http://example.org/"
+  obi: "http://purl.obolibrary.org/obo/OBI_"
+  iao: "http://purl.obolibrary.org/obo/IAO_"  
+  qudt: "http://qudt.org/vocab/unit/"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  pmd: "https://w3id.org/pmd/co/PMD_"
+  ro: "http://purl.obolibrary.org/obo/RO_"
+  bfo: "http://purl.obolibrary.org/obo/BFO_"
+  time: "http://www.w3.org/2006/time#"
+  noes: "https://w3id.org/pmd/noes/NOES_"
+mappings:
+# ------------------------------------------------------------------------------
+  metal-sheet-1:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:metal_sheet1$(shared_id)
+
+    po:
+      - [a, bfo:0000030] # a bfo:object
+      - [pmd:0000069, ex:metal_sheet1_before_cutting$(shared_id)~iri] # has state
+# ------------------------------------------------------------------------------
+  metal-sheet-1-before-cutting:
+    sources:
+       # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:metal_sheet1_before_cutting$(shared_id)
+
+    po:
+      - [a, pmd:0000068] # a temporally qualified continuant
+      - [bfo:0000108, ex:temporal_region_pre_cutting_sheet1~iri] # exists at
+# ------------------------------------------------------------------------------
+  metal-sheet-1-cutting-process:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id     
+
+    s: ex:cutting_metal_sheet1$(shared_id)
+
+    po: 
+      - [a, pmd:0000614] # a dividing
+      - [obi:0000293, ex:metal_sheet1_before_cutting~iri]
+# ------------------------------------------------------------------------------
+  temporal-region-metal-sheet-1-before-cutting:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id 
+          
+    s: ex:temporal_region_before_cutting_sheet1$(shared_id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:temporal_region_after_cutting_sheet1~iri] # precedes
+# ------------------------------------------------------------------------------
+  temporal-region-metal-sheet-1-after-cutting:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id 
+          
+    s: ex:temporal_region_after_cutting_sheet1$(shared_id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+
+
+# ---------------------------------- Directions --------------------------------
+  metal-sheet-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:rolling_direction_sheet1$(shared_id)
+
+    po:
+      - [a, noes:0000033] # a rolling direction
+      - [ro:0001015, ex:metal_sheet1~iri] # location of
+      #- [pmd:0025998, ex:svs_orthogonal_angle_to_rolling_direction_sheet1~iri] # has relational quality
+      #- [pmd:0025998, ex:svs_parallel_angle_to_rolling_direction_sheet1~iri] # has relational quality
+      #- [pmd:0025998, ex:svs_diagonal_angle_to_rolling_direction_sheet1~iri] # has relational quality
+# ------------------------------------------------------------------------------
+  orthogonal-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:angle_to_rolling_direction_sheet1_90$(shared_id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0000077, ex:svs_angle_to_rolling_direction_sheet1_90~iri] # specified by value
+
+  value-orthogonal-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:svs_angle_to_rolling_direction_sheet1_90$(shared_id)
+
+    po: 
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: "90"
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri
+# ------------------------------------------------------------------------------
+  parallel-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:angle_to_rolling_direction_sheet1_0$(shared_id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0000077, ex:svs_angle_to_rolling_direction_sheet1_0~iri] # specified by value
+
+  value-parallel-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:svs_angle_to_rolling_direction_sheet1_0$(shared_id)
+
+    po: 
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: "0"
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri
+# ------------------------------------------------------------------------------
+  diagonal-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:diagonal_angle_to_rolling_direction_sheet1$(shared_id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0000077, ex:svs_diagonal_angle_to_rolling_direction_sheet1~iri] # specified by value
+
+  value-diagonal-angle-to-rolling-direction:
+    sources:
+      # Just do get some constant identifier
+      - query : |
+          SELECT '' AS shared_id
+
+    s: ex:svs_diagonal_angle_to_rolling_direction_sheet1$(shared_id)
+
+    po: 
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: "45"
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri

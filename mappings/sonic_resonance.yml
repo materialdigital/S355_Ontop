@@ -1,0 +1,763 @@
+prefixes:
+  ex: "http://example.org/"
+  obi: "http://purl.obolibrary.org/obo/OBI_"
+  iao: "http://purl.obolibrary.org/obo/IAO_"  
+  qudt: "http://qudt.org/vocab/unit/"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  pmd: "https://w3id.org/pmd/co/PMD_"
+  ro: "http://purl.obolibrary.org/obo/RO_"
+  bfo: "http://purl.obolibrary.org/obo/BFO_"
+mappings:
+######################### Test Piece #########################
+  sr-test-piece:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_piece_$(id)
+
+    po:
+      - [a, pmd:0000068] # a temporally qualified continuant
+      - [pmd:0000070, ex:metal_$(metal_sheet)] # is state of
+      - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)] # exists at
+      - [obi:0000312, ex:cutting_metal_$(metal_sheet)] # is specified output of
+      - [iao:0000235, ex:sr_id_$(id)] # denoted by
+      - [ro:0001000, ex:metal_$(metal_sheet)] # derives from
+      - [ro:0000053, ex:sr_eigenfreq_hk_$(id)] # has characteristic
+      - [ro:0000053, ex:sr_eigenfreq_fk_$(id)] 
+      - [ro:0000053, ex:sr_eigenfreq_tors_$(id)]
+      - [ro:0000053, ex:sr_E_hk_$(id)] 
+      - [ro:0000053, ex:sr_E_fk_$(id)] 
+      - [ro:0000053, ex:sr_E_$(id)] 
+      - [ro:0000053, ex:sr_G_$(id)] 
+      - [ro:0000053, ex:sr_poisson_ratio_fk_$(id)]
+      - [ro:0000053, ex:sr_poisson_ratio_hk_$(id)]
+      - [ro:0000053, ex:sr_poisson_ratio_$(id)] 
+      - [ro:0000086, ex:sr_mass_$(id)] # has quality
+      - [ro:0000086, ex:sr_length_$(id)]
+      - [ro:0000086, ex:sr_width_$(id)]
+      - [ro:0000086, ex:sr_height_$(id)]
+      - [ro:0000086, ex:sr_density_$(id)]
+############### [NOES] Longitudinal Direction #################
+  sr-longitudinal-direction:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_piece_long_dir_$(id)
+
+    po:
+      - [a, noes:0000031] # a longitudinal direction
+      - [ro:0001015, ex:sr_test_piece_$(id)] # location of
+      - [pmd:0000077, ex:sr_angle_to_rd_$(id)] # has relational quality
+############### Information Content Entities #################
+  sr-id:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_id_$(id)
+
+    po:
+      - [a, iao:0020000] # a identifier
+      - [iao:0000219, ex:sr_test_piece_$(id)] # denotes
+
+      - p: pmd:0000006 # has value
+        o: $(id)
+        datatype: xsd:string
+######################### Qualities #########################
+  sr-angle-to-rd:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_angle_to_rd_$(id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0025999, ex:rolling_direction_$(metal_sheet)] # is relational quality of
+      - [pmd:0000077, ex:svs_angle_to_rd_$(id)] # specified by value
+
+  sr-mass:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_mass_$(id)
+
+    po:
+      - [a, pmd:0020133] # a mass
+      - [ro:0000080, ex:sr_test_piece_$(id)] # quality of sr test piece x
+      - [pmd:0000077, ex:svs_mass_$(id)] # specified by value svs
+
+  sr-length:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_length_$(id)
+
+    po:
+      - [a, pmd:0040001] # a length
+      - [ro:0000080, ex:sr_test_piece_$(id)] # quality of sr test piece x
+      - [pmd:0000077, ex:svs_length_$(id)] # specified by value svs
+  
+  sr-width:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_width_$(id)
+
+    po:
+      - [a, pmd:0050154] # a width (Breite)
+      - [ro:0000080, ex:sr_test_piece_$(id)] # quality of sr test piece x
+      - [pmd:0000077, ex:svs_width_$(id)] # specified by value svs
+
+  sr-height:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_height_$(id)
+
+    po:
+      - [a, pmd:0050153] # a Dicke
+      - [ro:0000080, ex:sr_test_piece_$(id)] # quality of sr test piece x
+      - [pmd:0000077, ex:svs_height_$(id)] # specified by value svs
+  
+  sr-density:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_density_$(id)
+
+    po:
+      - [a, pmd:0000597] # a density
+      - [ro:0000080, ex:sr_test_piece_$(id)] # quality of sr test piece x
+      - [pmd:0000077, ex:svs_density_$(id)] # specified by value svs
+
+#################### Realizable entities #####################
+  sr-Eigenfrequency-hk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_hk_$(id)
+
+    po:
+      - [a, pmd:Eigenfrequency] # TODO: change to actual uri
+      - [pmd:0000077, ex:svs_eigenfreq_hk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-Eigenfrequency-fk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_fk_$(id)
+
+    po:
+      - [a, pmd:Eigenfrequency] # TODO: change to actual uri
+      - [pmd:0000077, ex:svs_eigenfreq_fk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-Eigenfrequency-Torsional:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_tors_$(id)
+
+    po:
+      - [a, pmd:Eigenfrequency] # TODO: change to actual uri
+      - [pmd:0000077, ex:svs_eigenfreq_tors_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-E-hk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_E_hk_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_E_hk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-E-fk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_E_fk_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_E_fk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-E:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_E_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_E_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-G:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_G_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_G_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-poisson-ratio-hk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_poisson_ratio_hk_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_poisson_ratio_hk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-poisson-ratio-fk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_poisson_ratio_fk_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_poisson_ratio_fk_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+  sr-poisson-ratio:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_poisson_ratio_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_poisson_ratio_$(id)] # specified by value
+      - [ro:0000052, ex:sr_test_piece_$(id)] # characteristic of
+
+##################### Measurement Data #######################
+  sr-angle-to-rd-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_angle_to_rd_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(orientation)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri
+
+  sr-Eigenfrequency-hk-measurment-datum:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_hk_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_eigenfreq_hk_$(id)] # specified by value
+      - [iao:0000136, ex:sr_eigenfreq_hk_$(id)] # is about
+      - [iao:0000136, ex:sr_test_piece_$(id)] # is about
+
+  sr-Eigenfrequency-fk-measurment-datum:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_fk_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_eigenfreq_fk_$(id)] # specified by value
+      - [iao:0000136, ex:sr_eigenfreq_fk_$(id)] # is about
+      - [iao:0000136, ex:sr_test_piece_$(id)] # is about
+
+  sr-Eigenfrequency-Torsional-measurment-datum:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_eigenfreq_tors_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_eigenfreq_tors_$(id)] # specified by value
+      - [iao:0000136, ex:sr_eigenfreq_tors_$(id)] # is about
+      - [iao:0000136, ex:sr_test_piece_$(id)] # is about
+#################### Value specifications ####################
+  sr-mass-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_mass_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(mass_g)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:GM~iri # gramm
+
+  sr-length-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_length_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(length_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  sr-width-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_width_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(width_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  sr-height-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_height_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(height_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  sr-density-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_density_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(density_GPERCM3)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:GM-PER-CentiM3~iri
+
+  sr-Eigenfrequency-hk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_eigenfreq_hk_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(ff_hk_hz)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:HZ~iri
+
+  sr-Eigenfrequency-fk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_eigenfreq_fk_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(ff_fk_hz)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:HZ~iri
+
+  sr-Eigenfrequency-Torsional-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_eigenfreq_tors_$(id)
+
+    po:
+      - [a, obi:0001931]
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(ft_hz)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:HZ~iri
+
+  sr-E-hk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_E_hk_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(e_hk_gpa)
+        datatype: xsd:float
+
+      - p: iao:0000039
+        o: qudt:GigaPA~iri
+
+  sr-E-fk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_E_fk_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(e_fk_gpa)
+        datatype: xsd:float
+
+      - p: iao:0000039
+        o: qudt:GigaPA~iri
+
+  sr-E-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_E_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(e_mw_gpa)
+        datatype: xsd:float
+
+      - p: iao:0000039
+        o: qudt:GigaPA~iri
+
+  sr-G-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_G_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(G_GPA)
+        datatype: xsd:float
+
+      - p: iao:0000039
+        o: qudt:GigaPA~iri
+
+  sr-poisson-ratio-hk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_poisson_ratio_hk_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(mu_hk)
+        datatype: xsd:float
+
+  sr-poisson-ratio-fk-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_poisson_ratio_fk_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(mu_fk)
+        datatype: xsd:float
+
+  sr-poisson-ratio-value:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:svs_poisson_ratio_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(mu_mw)
+        datatype: xsd:float
+
+#################### Sonic Resonance Test ####################
+  sr-test:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_$(id)
+
+    po:
+      - [a, pmd:0000849] # a mechanical property analyzing process
+      - [obi:0000293, ex:sr_test_piece_$(id)] # has specified input
+      - [obi:0000299, ex:sr_eigenfreq_hk_md_$(id)] # has specified output
+      - [obi:0000299, ex:sr_eigenfreq_fk_md_$(id)] # has specified output
+      - [obi:0000299, ex:sr_eigenfreq_tors_md_$(id)] # has specified output
+      - [ro:0009006, ex:sr_eigenfreq_hk_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:sr_eigenfreq_fk_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:sr_eigenfreq_tors_$(id)] # assay measures characteristic
+
+################# Test Piece Role #################
+  sr-test-piece-role:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_piece_role_$(id)
+
+    po:
+      - [a, obi:0000067] # evaluant role
+      - [ro:0000081, ex:sr_test_piece_$(id)] # role of charpy test piece
+      - [bfo:0000054, ex:sr_test_$(id)] # has realization
+      - [bfo:0000199, ex:sr_test_temporal_region_$(id)] # occupies temporal region
+################## Plan and Spec ##################
+  sr-test-plan:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_plan_$(id)
+
+    po:
+      - [a, obi:0000260] # a plan
+      - [bfo:0000054, ex:sr_test_$(id)] # realized in
+      - [ro:0000059, ex:sr_test_spec] # concretizes
+
+  sr-test-spec:
+    sources:
+      - query: |
+          SELECT '' AS shared_id
+
+    s: ex:sr_test_spec$(shared_id)
+
+  sr-test-spec:
+    sources:
+      - query: |
+          SELECT '' AS shared_id,
+          'ASTM E 1875:2020' AS standard_name 
+
+    s: ex:sr_test_spec$(shared_id)
+
+    po:
+      - [a, iao:0000104] # a plan specification
+
+      - p: pmd:0000006  # has value
+        o: $(standard_name)
+        datatype: xsd:string
+
+#################### Computing Processes #####################  
+  computing-process-E-modulus-hk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_hk_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:sr_eigenfreq_hk_md_$(id)] # has specified input
+      - [obi:0000299, ex:svs_E_hk_$(id)] # has specified output
+
+  computing-process-E-modulus-fk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_fk_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:sr_eigenfreq_fk_md_$(id)] # has specified input
+      - [obi:0000299, ex:svs_E_fk_$(id)] # has specified output
+
+  computing-process-E-modulus-mw:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:svs_E_fk_$(id)] # has specified input
+      - [obi:0000293, ex:svs_E_hk_$(id)] # has specified input
+      - [obi:0000299, ex:svs_E_$(id)] # has specified output
+
+  computing-process-G-modulus:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_G_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:sr_eigenfreq_tors_md_$(id)] # has specified input
+      - [obi:0000299, ex:svs_G_$(id)] # has specified output
+
+  computing-process-poisson-ratio-hk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_hk_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:svs_G_$(id)] # has specified input
+      - [obi:0000293, ex:svs_E_hk_$(id)] # has specified input
+      - [obi:0000299, ex:svs_poisson_ratio_hk_$(id)] # has specified output
+
+  computing-process-poisson-ratio-fk:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_fk_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:svs_G_$(id)] # has specified input
+      - [obi:0000293, ex:svs_E_fk_$(id)] # has specified input
+      - [obi:0000299, ex:svs_poisson_ratio_fk_$(id)] # has specified output
+
+  computing-process-poisson-ratio:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_fk_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:svs_G_$(id)] # has specified input
+      - [obi:0000293, ex:svs_E_$(id)] # has specified input
+      - [obi:0000299, ex:svs_poisson_ratio_$(id)] # has specified output
+
+
+#################### Temporal Regions #####################  
+  sr-test-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:sr_test_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:comp_proc_E_fk_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_E_hk_temporal_region_$(id)] # precedes
+
+  comp-proc-E-fk-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_fk_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:sr_test_temporal_region_$(id)] # preceded by
+      - [bfo:0000063, ex:comp_proc_E_temporal_region_$(id)] # precedes
+  
+  comp-proc-E-hk-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_hk_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:sr_test_temporal_region_$(id)] # preceded by
+      - [bfo:0000063, ex:comp_proc_E_temporal_region_$(id)] # precedes
+
+  comp-proc-G-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_G_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:sr_test_temporal_region_$(id)] # preceded by
+      - [bfo:0000063, ex:comp_proc_poisson_ratio_hk_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_poisson_ratio_fk_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_poisson_ratio_temporal_region_$(id)] # precedes
+
+  comp-proc-E-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_E_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:comp_proc_E_hk_temporal_region_$(id)] # preceded by
+      - [bfo:0000062, ex:comp_proc_E_fk_temporal_region_$(id)] # preceded by
+      - [bfo:0000063, ex:comp_proc_poisson_ratio_temporal_region_$(id)] # precedes
+
+  comp-proc-poisson-ratio-hk-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_hk_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:comp_proc_G_temporal_region_$(id)] # preceded by
+      - [bfo:0000062, ex:comp_proc_E_hk_temporal_region_$(id)] # preceded by
+
+  comp-proc-poisson-ratio-fk-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_fk_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:comp_proc_G_temporal_region_$(id)] # preceded by
+      - [bfo:0000062, ex:comp_proc_E_fk_temporal_region_$(id)] # preceded by
+
+  comp-proc-poisson-ratio-temporal-region:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:comp_proc_poisson_ratio_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000062, ex:comp_proc_G_temporal_region_$(id)] # preceded by
+      - [bfo:0000062, ex:comp_proc_E_temporal_region_$(id)] # preceded by

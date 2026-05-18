@@ -1,0 +1,356 @@
+prefixes:
+  ex: "http://example.org/"
+  obi: "http://purl.obolibrary.org/obo/OBI_"
+  iao: "http://purl.obolibrary.org/obo/IAO_"  
+  qudt: "http://qudt.org/vocab/unit/"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  pmd: "https://w3id.org/pmd/co/PMD_"
+  ro: "http://purl.obolibrary.org/obo/RO_"
+  bfo: "http://purl.obolibrary.org/obo/BFO_"
+  time: "http://www.w3.org/2006/time#"
+  noes: "https://w3id.org/pmd/noes/NOES_"
+mappings:
+######################### Test Piece #########################
+  charpy-test-piece:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_piece_$(id)
+
+    po:
+      - [a, pmd:0000068] # a temporally qualified continuant
+      - [pmd:0000070, ex:metal_$(metal_sheet)] # is state of
+      - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)] # exists at
+      - [obi:0000312, ex:cutting_metal_$(metal_sheet)] # is specified output of
+      - [iao:0000235, ex:charpy_id_$(id)] # denoted by
+      - [bfo:0000016, ex:charpy_KV2_750_5_$(id)] # has disposition
+      - [ro:0000086, ex:charpy_length_$(id)] # has quality
+      - [ro:0000086, ex:charpy_crosspiece_length_$(id)]
+      - [ro:0000086, ex:charpy_width_$(id)]
+      - [ro:0000086, ex:charpy_thickness_$(id)]
+      - [ro:0000086, ex:charpy_temperautre_$(id)]
+      - [iao:0000235, ex:charpy_id_$(id)] # denoted by
+      - [ro:0001000, ex:metal_$(metal_sheet)] # derives from
+
+############### [NOES] Longitudinal Direction #################
+  charpy-longitudinal-direction:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_piece_long_dir_$(id)
+
+    po:
+      - [a, noes:0000031] # a longitudinal direction
+      - [ro:0001015, ex:charpy_test_piece_$(id)] # location of
+      - [pmd:0000077, ex:charpy_angle_to_rd_$(id)] # has relational quality
+
+############### Information Content Entities #################
+  charpy-id:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_id_$(id)
+
+    po:
+      - [a, iao:0020000] # a identifier
+      - [iao:0000219, ex:charpy_test_piece_$(id)] # denotes
+
+      - p: pmd:0000006 # has value
+        o: $(id)
+        datatype: xsd:string
+######################### Qualities ##########################
+  charpy-angle-to-rd:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_angle_to_rd_$(id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0025999, ex:rolling_direction_$(metal_sheet)] # is relational quality of
+      - [pmd:0000077, ex:svs_angle_to_rd_$(id)] # specified by value
+
+  charpy-length:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_length_$(id)
+
+    po:
+      - [a, pmd:0040001] # a length
+      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_lenght_$(id)] # specified by value svs length x
+
+  charpy-crosspiece:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_crosspiece_length_$(id)
+
+    po:
+      - [a, pmd:0040001] # a length
+      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_crosspiece_$(id)] # specified by value svs length x
+
+  charpy-width:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_width_$(id)
+
+    po:
+      - [a, pmd:0050154] # a width (Breite)
+      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_width_$(id)] # specified by value svs length x
+
+  charpy-thickness:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_thickness_$(id)
+
+    po:
+      - [a, pmd:0050153] # a Dicke
+      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_thickness_$(id)] # specified by value svs length x
+
+  charpy-temperatue:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_temperature_$(id)
+
+    po:
+      - [a, pmd:0000967] # a temperature
+      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of
+      - [pmd:0000077, ex:svs_temperature_$(id)] # specified by value
+#################### Realizable entities #####################
+  charpy-kv2-750-5:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_KV2_750_5_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_KV2_750_5_$(id)] # specified by value
+      - [ro:0000052, ex:charpy_test_piece_$(id)] # characteristic of
+############### Information Content Entities #################
+  charpy-id:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_id_$(id)
+
+    po:
+      - [a, iao:0020000] # a identifier
+      - [iao:0000219, ex:charpy_test_piece_$(id)] # denotes
+
+      - p: pmd:0000006 # has value
+        o: $(id)
+        datatype: xsd:string
+#################### Value specifications ####################
+  charpy-angle-to-rd-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_angle_to_rd_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(orientation)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri
+
+  charpy-length-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_length_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(length_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  charpy-crosspiece-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_crosspiece_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(crosspiece_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:MilliM~iri
+
+  charpy-width-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_width_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(width_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:MilliM~iri
+
+  charpy-thickness-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_thickness_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(thickness_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:MilliM~iri
+
+  charpy-temperature-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_temperature_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(test_temp_c)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:DEG_C~iri
+
+  charpy-kv2-750-5-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_KV2_750_5_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(kv2_750_5_J)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:J~iri
+
+  charpy-test-temp-value:
+    sources:
+      - table: charpy_data
+
+    s: ex:svs_temperature_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(test_temp_C)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:DEG_C~iri
+
+#################### Charpy Test ####################
+  charpy-test:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_$(id)
+    
+    po:
+      - [a, pmd:0000788] # an impact testing process (assay)
+      - [obi:0000293, ex:charpy_test_piece_$(id)] # has specified input charpy test piece
+      - [ro:0009006, ex:charpy_KV2_750_5_$(id)] # assay measures characteristic
+      - [bfo:0000199, ex:charpy_test_temporal_region_$(id)] # occupies temporal region
+      - [bfo:0000055, ex:charpy_test_plan_$(id)] # realizes
+################# Test Piece Role #################
+  charpy-test-piece-role:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_piece_role_$(id)
+
+    po:
+      - [a, obi:0000067] # evaluant role
+      - [ro:0000081, ex:charpy_test_piece_$(id)] # role of charpy test piece
+      - [bfo:0000054, ex:charpy_test_$(id)] # has realization
+
+################## Plan and Spec ##################
+  charpy-test-plan:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_plan_$(id)
+
+    po:
+      - [a, obi:0000260] # a plan
+      - [bfo:0000054, ex:charpy_test_$(id)] # realized in
+      - [ro:0000059, ex:charpy_test_spec] # concretizes
+
+  charpy-test-spec:
+    sources:
+      - query: |
+          SELECT '' AS shared_id,
+          'DIN EN ISO 148-1:2017-05' AS standard_name 
+
+    s: ex:charpy_test_spec$(shared_id)
+
+    po:
+      - [a, iao:0000104] # a plan specification
+
+      - p: pmd:0000006  # has value
+        o: $(standard_name)
+        datatype: xsd:string
+
+######## Temporal region of the charpy test #######
+  charpy-test-temporal-region:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000222, ex:charpy_test_start_$(id)] # has first instant
+
+  charpy-test-start:
+    sources:
+      - table: charpy_data
+
+    s: ex:charpy_test_start_$(id)
+
+    po:
+      - [a, bfo:0000203] # temporal instant
+
+      - p:  time:inXSDDateTime
+        o:  $(test_date)
+        datatype: xsd:dateTime
+

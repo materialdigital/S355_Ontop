@@ -1,0 +1,1167 @@
+prefixes:
+  ex: "http://example.org/"
+  obi: "http://purl.obolibrary.org/obo/OBI_"
+  iao: "http://purl.obolibrary.org/obo/IAO_"  
+  qudt: "http://qudt.org/vocab/unit/"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  pmd: "https://w3id.org/pmd/co/PMD_"
+  ro: "http://purl.obolibrary.org/obo/RO_"
+  bfo: "http://purl.obolibrary.org/obo/BFO_"
+mappings:
+######################### Test Piece #########################
+  tensile-test-piece:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_piece_$(id)
+
+    po:
+      - [a, pmd:0000068] # a temporally qualified continuant
+      - [pmd:0000070, ex:metal_$(metal_sheet)] # is state of
+      - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)] # exists at
+      - [obi:0000312, ex:cutting_metal_$(metal_sheet)] # is specified output of
+      - [ro:0001000, ex:metal_$(metal_sheet)] # derives from
+      - [ro:0000086, ex:thickness_$(id)] # has quality
+      - [ro:0000086, ex:width_$(id)] # has quality
+      - [ro:0000086, ex:cross_section_area_mean_$(id)] # has quality (computed from the thickness and width values)
+      - [ro:0000086, ex:original_gauge_length_$(id)] # has quality
+      #- [ro:0000086, ex:elongated_gauge_length_$(id)] # has quality
+      #- [ro:0000086, ex:final_thickness_$(id)] # has quality (a_u mm)
+      #- [ro:0000086, ex:final_width_$(id)] # has quality (b_u mm)
+      #- [ro:0000086, ex:min_cross_section_area_at_fracture_$(id)] # has quality (S_u mm2)
+      #- [ro:0000086, ex:elongation_of_fracture_$(id)] # has quality (A_percent)
+      #- [ro:0000086, ex:reduction_of_area_$(id)] # has quality (Z_percent)
+      - [ro:0000086, ex:temperature_at_test_$(id)] # has quality (test_temp_c)
+      - [ro:0000053, ex:force_UYS_$(id)] # has characteristic (F_eH kN) (Force Yield Strenght)
+      - [ro:0000053, ex:maximum_force_$(id)] # has characteristic (F_M kN) (Maximum Force)
+      - [ro:0000053, ex:upper_yield_strength_$(id)] # has characteristic // REH_MPA
+      - [ro:0000053, ex:ultimate_tensile_strength_$(id)] # RM_MPA
+      - [ro:0000053, ex:E_modulus_$(id)] # E_GPA
+
+  tensile-test-piece-after:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_piece_after_test_$(id)
+
+    po:
+      - [a, pmd:0000068] # a temporally qualified continuant
+      - [pmd:0000070, ex:metal_$(metal_sheet)] # is state of
+      - [bfo:0000108, ex:measurement_process_post_temporal_region_$(id)] # exists at
+      - [obi:0000312, ex:tensile_test_$(id)] # is specified output of
+      - [ro:0001000, ex:tensile_test_piece_$(id)] # derives from
+      - [ro:0000086, ex:elongated_gauge_length_$(id)] # has quality
+      - [ro:0000086, ex:final_thickness_$(id)] # has quality (a_u mm)
+      - [ro:0000086, ex:final_width_$(id)] # has quality (b_u mm)
+      - [ro:0000086, ex:min_cross_section_area_at_fracture_$(id)] # has quality (S_u mm2)
+      - [ro:0000086, ex:elongation_of_fracture_$(id)] # has quality (A_percent)
+      - [ro:0000086, ex:reduction_of_area_$(id)] # has quality (Z_percent)
+
+############### [NOES] Longitudinal Direction #################
+  tensile-longitudinal-direction:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_piece_long_dir_$(id)
+
+    po:
+      - [a, noes:0000031] # a longitudinal direction
+      - [ro:0001015, ex:tensile_test_piece_$(id)] # location of
+      - [pmd:0000077, ex:tensile_angle_to_rd_$(id)] # has relational quality
+
+############### Information Content Entities #################
+  tensile-id:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_id_$(id)
+
+    po:
+      - [a, iao:0020000] # a identifier
+      - [iao:0000219, ex:tensile_test_piece_$(id)] # denotes
+
+      - p: pmd:0000006 # has value
+        o: $(id)
+        datatype: xsd:string
+######################### Qualities ##########################
+  tensile-angle-to-rd:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_angle_to_rd_$(id)
+
+    po:
+      - [a, noes:0000160] # an angle to rolling direction
+      - [pmd:0025999, ex:rolling_direction_$(metal_sheet)] # is relational quality of
+      - [pmd:0000077, ex:svs_angle_to_rd_$(id)] # specified by value
+
+  thickness:
+    sources:
+      - table: tensile_data
+
+    s: ex:thickness_$(id)
+
+    po:
+      - [a, pmd:0050153] # a thickness
+      - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_thickness_mean_$(id)] # specified by value svs 
+
+  final-thickness:
+    sources:
+      - table: tensile_data
+
+    s: ex:final_thickness_$(id)
+
+    po:
+      - [a, pmd:0050153] # a thickness
+      - [ro:0000080, ex:tensile_test_piece_after_test_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_final_thickness_$(id)] # specified by value svs 
+
+  width:
+    sources:
+      - table: tensile_data
+
+    s: ex:width_$(id)
+
+    po:
+      - [a, pmd:0050154] # a width
+      - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_width_mean_$(id)] # specified by value
+
+  final-width:
+    sources:
+      - table: tensile_data
+
+    s: ex:final_width_$(id)
+
+    po:
+      - [a, pmd:0050154] # a width
+      - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_final_width_$(id)] # specified by value svs
+
+  cross-section-area-mean:
+    sources:
+      - table: tensile_data
+
+    s: ex:cross_section_area_mean_$(id)
+
+    po:
+      - [a, pmd:0000942] # a specific surface area (?)
+      - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_cross_section_area_mean_$(id)] # specified by value svs
+
+  min-cross-section-area-at-fracture:
+    sources:
+      - table: tensile_data
+
+    s: ex:min_cross_section_area_at_fracture_$(id)
+
+    po:
+      - [a, pmd:0000942] # a specific surface area (?)
+      - [ro:0000080, ex:tensile_test_piece_after_test_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_min_cross_section_area_at_fracture_$(id)] # specified by value svs
+
+  original-gauge-length:
+    sources:
+      - table: tensile_data
+
+    s: ex:original_gauge_length_$(id)
+
+    po:
+      - [a, pmd:0040001] # a length
+      - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_original_gauge_length_$(id)] # specified by value svs
+
+  elongated-gauge-length:
+    sources:
+      - table: tensile_data
+
+    s: ex:elongated_gauge_length_$(id)
+
+    po:
+      - [a, pmd:0040001] # a length
+      - [ro:0000080, ex:tensile_test_piece_after_test_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_elongated_gauge_length_$(id)] # specified by value svs
+
+  elongation-of-fracture:
+    sources:
+      - table: tensile_data
+
+    s: ex:elongation_of_fracture_$(id)
+
+    po:
+      - [a, pmd:0020101] # a proportion
+      - [ro:0000080, ex:tensile_test_piece_after_test_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_elongation_of_fracture_$(id)] # specified by value svs
+
+  reduction-of-area:
+    sources:
+      - table: tensile_data
+
+    s: ex:reduction_of_area_$(id)
+
+    po:
+      - [a, pmd:0020101] # a proportion
+      - [ro:0000080, ex:tensile_test_piece_after_test_$(id)] # quality of tensile test piece x
+      - [pmd:0000077, ex:svs_reduction_of_area_$(id)] # specified by value svs
+
+  temperatue-at-tensile-test:
+      sources:
+        - table: tensile_data
+
+      s: ex:temperature_at_test_$(id)
+
+      po:
+        - [a, pmd:0000967] # a temperature
+        - [ro:0000080, ex:tensile_test_piece_$(id)] # quality of
+        - [pmd:0000077, ex:svs_temperature_at_test_$(id)] # specified by value
+#################### Realizable entities #####################
+  force-upper-yield-strength:
+    sources:
+      - table: tensile_data
+
+    s: ex:force_UYS_$(id)
+
+    po:
+      - [a, pmd:0020200] # a force
+      - [pmd:0000077, ex:svs_force_UYS_$(id)] # specified by value
+      - [ro:0000052, ex:tensile_test_piece_$(id)] # characteristic of
+
+  maximum-force:
+    sources:
+      - table: tensile_data
+
+    s: ex:maximum_force_$(id)
+
+    po:
+      - [a, pmd:0020200] # a force
+      - [pmd:0000077, ex:svs_maximum_force_$(id)] # specified by value
+      - [ro:0000052, ex:tensile_test_piece_$(id)] # characteristic of
+
+  upper-yield-strength:
+    sources:
+      - table: tensile_data
+
+    s: ex:upper_yield_strength_$(id)
+
+    po:
+      - [a, pmd:0000952] # a strength
+      - [pmd:0000077, ex:svs_upper_yield_strength_$(id)] # specified by value
+      - [ro:0000052, ex:tensile_test_piece_$(id)] # characteristic of
+
+  ultimate-tensile-strength:
+    sources:
+      - table: tensile_data
+
+    s: ex:ultimate_tensile_strength_$(id)
+
+    po:
+      - [a, pmd:0000952] # a strength
+      - [pmd:0000077, ex:svs_ultimate_tensile_strength_$(id)] # specified by value
+      - [ro:0000052, ex:tensile_test_piece_$(id)] # characteristic of
+
+  E-modulus:
+    sources:
+      - table: tensile_data
+
+    s: ex:E_modulus_$(id)
+
+    po:
+      - [a, pmd:0000848] # a mechanical property
+      - [pmd:0000077, ex:svs_e_modulus_$(id)] # specified by value
+      - [ro:0000052, ex:tensile_test_piece_$(id)] # characteristic of
+
+##################### Measurement Data #######################
+  thickness1-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:thickness1_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_thickness1_$(id)] # specified by value
+      - [iao:0000136, ex:thickness1_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  thickness2-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:thickness2_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_thickness2_$(id)] # specified by value
+      - [iao:0000136, ex:thickness_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  thickness3-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:thickness3_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_thickness3_$(id)] # specified by value
+      - [iao:0000136, ex:thickness_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  width1-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:width1_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_width1_$(id)] # specified by value
+      - [iao:0000136, ex:width_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  width2-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:width2_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_width2_$(id)] # specified by value
+      - [iao:0000136, ex:width_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  width3-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:width3_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_width3_$(id)] # specified by value
+      - [iao:0000136, ex:width_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  original-gauge-length-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:original_gauge_length_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_original_gauge_length_$(id)] # specified by value
+      - [iao:0000136, ex:original_gauge_length_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  elongated-gauge-length-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:elongated_gauge_length_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_elongated_gauge_length_$(id)] # specified by value
+      - [iao:0000136, ex:elongated_gauge_length_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_after_test_$(id)] # is about
+
+  final-thickness-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:final_thickness_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_final_thickness_$(id)] # specified by value
+      - [iao:0000136, ex:final_thickness_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_after_test_$(id)] # is about
+
+  final-width-measurement-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:final_width_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_final_width_$(id)] # specified by value
+      - [iao:0000136, ex:final_width_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_after_test_$(id)] # is about
+
+  force-UYS-measurment-datum:
+    sources:
+      - table: tensile_data
+
+    s: ex:force_UYS_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_force_UYS_$(id)] # specified by value
+      - [iao:0000136, ex:force_UYS_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+
+  maximum-force-measurment-datum:
+    sources:
+      - table: sonic_resonance_data
+
+    s: ex:maximum_force_md_$(id)
+
+    po:
+      - [a, iao:0000109] # measurement datum
+      - [pmd:0000077, ex:svs_maximum_force_$(id)] # specified by value
+      - [iao:0000136, ex:maximum_force_$(id)] # is about
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about
+#################### Value specifications ####################
+  tensile-angle-to-rd-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_angle_to_rd_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(orientation)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:DEGREE~iri
+
+  thickness1-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_thickness1_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(d1_a1_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  thickness2-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_thickness2_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(d2_a2_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  thickness3-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_thickness3_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(d3_a3_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  final-thickness-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_final_thickness_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(au_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  width1-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_width1_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(b1_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  width2-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_width2_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(b2_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  width3-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_width3_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(b3_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  final-width-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_final_width_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(bu_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  cross-section-area-mean-value:
+    sources:
+      - query: |
+          SELECT
+            id, (s1_mm2 + s2_mm2 + s3_mm2) / 3.0 AS avg_value
+          FROM tensile_data
+
+    s: ex:svs_cross_section_area_mean_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(avg_value)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM2~iri
+
+  thickness-mean-value:
+    sources:
+      - query: |
+          SELECT
+            id, (d1_a1_mm + d2_a2_mm + d3_a3_mm) / 3.0 AS avg_value
+          FROM tensile_data
+
+    s: ex:svs_thickness_mean_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(avg_value)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  width-mean-value:
+    sources:
+      - query: |
+          SELECT
+            id, (b1_mm + b2_mm + b3_mm) / 3.0 AS avg_value
+          FROM tensile_data
+
+    s: ex:svs_width_mean_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(avg_value)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  min-cross-section-area-at-fracture-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_min_cross_section_area_at_fracture_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(su_mm2)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM2~iri
+
+  original-gauge-length-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_original_gauge_length_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(l0_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  elongated-gauge-length-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_elongated_gauge_length_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(lu_mm)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MilliM~iri
+
+  elongation-of-fracture-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_elongation_of_fracture_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(a_percent)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:PERCENT
+
+  reduction-of-area-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_reduction_of_area_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(z_percent)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:PERCENT
+
+  temperatue-at-tensile-test-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_temperature_at_test_$(id)
+
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(test_temp_C)
+        datatype: xsd:float
+
+      - p: iao:0000039 
+        o: qudt:DEG_C~iri
+  
+  upper-yield-strength-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_upper_yield_strength_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(reh_mpa)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MegaPA~iri
+
+  ultimate-tensile-strength-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_ultimate_tensile_strength_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(rm_mpa)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:MegaPA~iri
+
+  E-modulus-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_e_modulus_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(e_gpa)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:GigaPA~iri
+
+  force-upper-yield-strength-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_force_UYS_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(feh_kn)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:KiloN~iri
+
+  maximum-force-value:
+    sources:
+      - table: tensile_data
+
+    s: ex:svs_maximum_force_$(id)
+    
+    po:
+      - [a, obi:0001931] # scalar value specification
+
+      - p: obi:0001937 # has specified numeric value
+        o: $(fm_kn)
+        datatype: xsd:float
+
+      - p: iao:0000039 # has measurement unit label
+        o: qudt:KiloN~iri
+##################### First Measurement Process #####################
+  measure-before-test:
+    sources: 
+      - table: tensile_data
+
+    s: ex:measurement_process_pre_$(id)
+
+    po:
+      - [a, pmd:0000611] # a dimension measuring process
+      - [bfo:0000199, ex:measurement_process_pre_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:tensile_test_piece_$(id)] # has specified input
+      - [obi:0000299, ex:thickness1_md_$(id)] # has specified output
+      - [obi:0000299, ex:thickness2_md_$(id)] # has specified output
+      - [obi:0000299, ex:thickness3_md_$(id)] # has specified output
+      - [obi:0000299, ex:width1_md_$(id)] # has specified output
+      - [obi:0000299, ex:width2_md_$(id)] # has specified output
+      - [obi:0000299, ex:width3_md_$(id)] # has specified output
+      - [obi:0000299, ex:original_gauge_length_md_$(id)] # has specified output
+      - [ro:0009006, ex:thickness_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:width_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:original_gauge_length_$(id)] # assay measures characteristic
+##################### Tensile Test #####################
+  tensile-test:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_$(id)
+
+    po:
+      - [a, pmd:0000974] # a tensile testing process
+      - [bfo:0000199, ex:tensile_test_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:tensile_test_piece_$(id)] # has specified input
+      - [obi:0000299, ex:maximum_force_md_$(id)] # has specified output
+      - [obi:0000299, ex:force_UYS_md_$(id)] # has specified output
+      - [ro:0009006, ex:maximum_force_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:force_UYS_$(id)] # assay measures characteristic
+      # TODO: E-Modulus: output: the csv then some computing process that computes E-modulus from the data in the csv.
+      
+##################### Second Measurement Process #####################
+  measure-after-test:
+    sources: 
+      - table: tensile_data
+
+    s: ex:measurement_process_post_$(id)
+
+    po:
+      - [a, pmd:0000611] # a dimension measuring process 
+      - [bfo:0000199, ex:measurement_process_post_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:tensile_test_piece_after_test_$(id)] # has specified input
+      - [obi:0000299, ex:elongated_gauge_length_md_$(id)] # has specified output
+      - [obi:0000299, ex:final_thickness_md_$(id)] # has specified output
+      - [obi:0000299, ex:final_width_md_$(id)] # has specified output
+      - [ro:0009006, ex:elongated_gauge_length_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:final_thickness_$(id)] # assay measures characteristic
+      - [ro:0009006, ex:final_width_$(id)] # assay measures characteristic
+##################### Roles #####################
+  measurement-pre-test-role:
+    sources:
+      - table: tensile_data
+
+    s: ex:measurement_process_pre_role_$(id)
+
+    po:
+      - [a, obi:0000067] # evaluant role
+      - [ro:0000081, ex:tensile_test_piece_$(id)] # role of charpy test piece
+      - [bfo:0000054, ex:measurement_process_pre_$(id)] # has realization
+
+  tensile-test-piece-role:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_piece_role_$(id)
+
+    po:
+      - [a, obi:0000067] # evaluant role
+      - [ro:0000081, ex:tensile_test_piece_$(id)] # role of charpy test piece
+      - [bfo:0000054, ex:tensile_test_$(id)] # has realization
+
+  measurement-post-test-role:
+    sources:
+      - table: tensile_data
+
+    s: ex:measurement_process_post_role_$(id)
+
+    po:
+      - [a, obi:0000067] # evaluant role
+      - [ro:0000081, ex:tensile_test_piece_$(id)] # role of charpy test piece
+      - [bfo:0000054, ex:measurement_process_post_$(id)] # has realization
+################## Plan and Spec ##################
+  tensile-test-plan:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_plan_$(id)
+
+    po:
+      - [a, obi:0000260] # a plan
+      - [bfo:0000054, ex:tensile_test_$(id)] # realized in
+      - [ro:0000059, ex:tensile_test_spec] # concretizes
+
+  tensile-test-spec:
+    sources:
+      - query: |
+          SELECT '' AS shared_id,
+          'ASTM E 1875:2020' AS standard_name 
+
+    s: ex:tensile_test_spec$(shared_id)
+
+    po:
+      - [a, iao:0000104] # a plan specification
+
+      - p: pmd:0000006  # has value
+        o: $(standard_name)
+        datatype: xsd:string
+#################### Computing Processes #####################  
+  computing-process-cross-section-area-mean:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_cross_section_mean_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_cross_section_mean_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_width1_$(id)] # has specified input
+      - [obi:0000293, ex:svs_width2_$(id)] # has specified input
+      - [obi:0000293, ex:svs_width3_$(id)] # has specified input
+      - [obi:0000293, ex:svs_thickness1_$(id)] # has specified input
+      - [obi:0000293, ex:svs_thickness2_$(id)] # has specified input
+      - [obi:0000293, ex:svs_thickness3_$(id)] # has specified input
+      - [obi:0000299, ex:svs_cross_section_area_mean_$(id)] # has specified output
+
+  computing-process-thickness-mean:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_thickness_mean_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_thickness_mean_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_thickness1_$(id)] # has specified input
+      - [obi:0000293, ex:svs_thickness2_$(id)] # has specified input
+      - [obi:0000293, ex:svs_thickness3_$(id)] # has specified input
+      - [obi:0000299, ex:svs_thickness_mean_$(id)] # has specified output
+
+  computing-process-width-mean:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_width_mean_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_width_mean_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_width1_$(id)] # has specified input
+      - [obi:0000293, ex:svs_width2_$(id)] # has specified input
+      - [obi:0000293, ex:svs_width3_$(id)] # has specified input
+      - [obi:0000299, ex:svs_width_mean_$(id)] # has specified output
+
+  computing-process-elongation-of-fracture:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_elongation_of_fracture_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_elongation_of_fracture_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_original_gauge_length_$(id)] # has specified input
+      - [obi:0000293, ex:svs_elongated_gauge_length_$(id)] # has specified input
+      - [obi:0000299, ex:svs_elongation_of_fracture_$(id)] # has specified output
+
+  computing-process-min-cross-section-area-at-fracture:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_min_cross_section_area_at_fracture_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_min_cross_section_area_at_fracture_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_final_thickness_$(id)] # has specified input
+      - [obi:0000293, ex:svs_final_width_$(id)] # has specified input
+      - [obi:0000299, ex:svs_min_cross_section_area_at_fracture_$(id)] # has specified output
+
+  computing-process-reduction-of-area:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_reduction_of_area_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_reduction_of_area_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_cross_section_area_mean_$(id)] # has specified input
+      - [obi:0000293, ex:svs_min_cross_section_area_at_fracture_$(id)] # has specified input
+      - [obi:0000299, ex:svs_reduction_of_area_$(id)] # has specified output
+
+  computing-process-ultimate-tensile-strength:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_ultimate_tensile_strength_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_ultimate_tensile_strength_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_maximum_force_$(id)] # has specified input
+      - [obi:0000293, ex:svs_cross_section_area_mean_$(id)] # has specified input
+      - [obi:0000299, ex:svs_ultimate_tensile_strength_$(id)] # has specified output
+
+  computing-process-upper-yield-strength:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_upper_yield_strength_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [obi:0000293, ex:svs_force_UYS_$(id)] # has specified input
+      - [obi:0000293, ex:svs_cross_section_area_mean_$(id)] # has specified input
+      - [obi:0000299, ex:svs_upper_yield_strength_$(id)] # has specified output
+
+  computing-process-E-modulus:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_e_modulus_$(id)
+
+    po:
+      - [a, pmd:0025012] # analytical calculation
+      - [bfo:0000199, ex:comp_proc_e_modulus_temporal_region_$(id)] # occupies temporal region
+      - [obi:0000293, ex:svs_original_gauge_length_$(id)] # has specified input
+      - [obi:0000293, ex:svs_cross_section_area_mean_$(id)] # has specified input
+      # TODO: add time row somehow (reference to csv)
+      - [obi:0000299, ex:svs_e_modulus_$(id)]
+
+#################### Temporal Regions #####################  
+  first-measurement-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:measurement_process_pre_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:comp_proc_cross_section_mean_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_thickness_mean_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_width_mean_temporal_region_$(id)] # precedes
+
+  computing-process-cross-section-area-mean-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_cross_section_mean_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:tensile_test_temporal_region_$(id)] # precedes
+
+  computing-process-thickness-mean-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_thickness_mean_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:tensile_test_temporal_region_$(id)] # precedes
+
+  computing-process-width-mean-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_width_mean_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:tensile_test_temporal_region_$(id)] # precedes
+
+  tensile-test-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000222, ex:tensile_test_start_$(id)] # has first instant
+      - [bfo:0000063, ex:measurement_process_post_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_ultimate_tensile_strength_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_upper_yield_strength_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_e_modulus_temporal_region_$(id)] # precedes
+  
+  tensile-test-start:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_start_$(id)
+
+    po:
+      - [a, bfo:0000203] # temporal instant
+
+      - p:  timeLinXSDDateTime
+        o:  $(test_date)
+        datatype: xsd:dateTime
+
+  second-measurement-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:measurement_process_post_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:comp_proc_elongation_of_fracture_temporal_region_$(id)] # precedes
+      - [bfo:0000063, ex:comp_proc_min_cross_section_area_at_fracture_temporal_region_$(id)] # precedes
+
+  computing-process-elongation-of-fracture-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_elongation_of_fracture_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+
+  computing-process-min-cross-section-area-at-fracture-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_min_cross_section_area_at_fracture_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+      - [bfo:0000063, ex:comp_proc_reduction_of_area_temporal_region_$(id)] # precedes
+
+  computing-process-reduction-of-area-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_reduction_of_area_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+
+  computing-process-ultimate-tensile-strength-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_ultimate_tensile_strength_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+
+  computing-process-upper-yield-strength-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_upper_yield_strength_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
+
+  computing-process-E-modulus-temporal-region:
+    sources:
+      - table: tensile_data
+
+    s: ex:comp_proc_e_modulus_temporal_region_$(id)
+
+    po:
+      - [a, bfo:0000008] # temporal region
