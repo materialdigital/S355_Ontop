@@ -1,6 +1,16 @@
 from pathlib import Path
 
-fileName = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\tensile_test\02_secondary_data\results_protocols\tensile_test_results.xlsx")
+BASE_DIR = Path(__file__).resolve().parent
+
+fileName = (
+	BASE_DIR
+	/ "S355_data"
+	/ "tensile_test"
+	/ "02_secondary_data"
+	/ "results_protocols"
+	/ "tensile_test_results.xlsx"
+)
+
 sheetName = "Festigkeitskennwerte"
 firstRow = 14 
 lastRow = 26
@@ -37,6 +47,12 @@ columns2 = {
 }
 
 experimentDir = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\tensile_test\02_secondary_data\results_protocols")
+experimentDir = (
+		BASE_DIR
+		/ "tensile_test"
+		/ "02_secondary_data"
+		/ "results_protocols"
+	)
 experimentSheets = {
 	Path(r"Protokoll-Zugversuch RT Zd.xlsx") : [r"Protokoll"],
 	Path(r"Protokoll-Zugversuch RT Zx.xlsx") : [r"Protocol_Zx1", r"Protocol_Zx2_to_Zx4"],

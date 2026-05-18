@@ -1,6 +1,15 @@
 from pathlib import Path
 
-fileName = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\charpy_test\02_secondary_data\Charpy_test_results.xlsx")
+BASE_DIR = Path(__file__).resolve().parent
+
+fileName = (
+	BASE_DIR
+	/ "S355_data"
+	/ "charpy_test"
+	/ "02_secondary_data"
+	/ "Charpy_test_results.xlsx"
+)
+
 sheetName = "Charpy_test_results"
 firstRow = 8
 lastRow = 13
@@ -13,8 +22,11 @@ columns = {
 	"KV2_750_5_J" : 5
 }
 
-
-primaryDataDir = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\charpy_test\01_primary_data")
+primaryDataDir =  (
+		BASE_DIR
+		/ "charpy_test"
+		/ "01_primary_data"
+)
 primaryDataSheetName = "Tabelle1"
 primaryFirstRow = 40
 primaryKeyCol = 0

@@ -1,6 +1,16 @@
 from pathlib import Path
 
-fileName = Path(r"C:\Users\landbeck\Desktop\ottr_r2rml\r2rml\S355_data\sonic_resonance_test\02_secondary_data\results_sonic_resonance_tests.xlsx")
+BASE_DIR = Path(__file__).resolve().parent
+
+fileName = (
+	BASE_DIR
+	/ "S355_data"
+	/ "sonic_resonance_test"
+	/ "02_secondary_data"
+	/ "results_sonic_resonance_tests.xlsx"
+)
+
+
 sheetName = "Ergebnisse Gesamt Resonanz"
 firstRow = 19
 lastRow = 23
