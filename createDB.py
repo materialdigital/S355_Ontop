@@ -167,7 +167,8 @@ for key in tensile_entries:
 # now that table creation queries are construction we need to fill them with the
 # data from our charpy_entries, sonic_resonance_entries, tensile_entries
 
-sql_file = open("s355.sql", "w")
+BASE_DIR = Path(__file__).resolve().parent
+sql_file = open(BASE_DIR / "s355.sql", "w")
 
 # create tables (if not exist)
 sql_file.write(tensile_table_string + "\n")
