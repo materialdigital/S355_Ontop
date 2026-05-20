@@ -8,18 +8,18 @@ mappings:
 
     po:
       - [a, pmd:0000068] # a temporally qualified continuant
-      - [pmd:0000070, ex:metal_$(metal_sheet)] # is state of
-      - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)] # exists at
-      - [obi:0000312, ex:cutting_metal_$(metal_sheet)] # is specified output of
-      - [iao:0000235, ex:charpy_id_$(id)] # denoted by
-      - [ro:0000091, ex:charpy_KV2_750_5_$(id)] # has disposition
-      - [ro:0000086, ex:charpy_length_$(id)] # has quality
-      - [ro:0000086, ex:charpy_crosspiece_length_$(id)]
-      - [ro:0000086, ex:charpy_width_$(id)]
-      - [ro:0000086, ex:charpy_thickness_$(id)]
-      - [ro:0000086, ex:charpy_temperautre_$(id)]
-      - [iao:0000235, ex:charpy_id_$(id)] # denoted by
-      - [ro:0001000, ex:metal_$(metal_sheet)] # derives from
+      - [pmd:0000070, ex:metal_$(metal_sheet)~iri] # is state of
+      - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)~iri] # exists at
+      - [obi:0000312, ex:cutting_metal_$(metal_sheet)~iri] # is specified output of
+      - [iao:0000235, ex:charpy_id_$(id)~iri] # denoted by
+      - [ro:0000091, ex:charpy_KV2_750_5_$(id)~iri] # has disposition
+      - [ro:0000086, ex:charpy_length_$(id)~iri] # has quality
+      - [ro:0000086, ex:charpy_crosspiece_length_$(id)~iri]
+      - [ro:0000086, ex:charpy_width_$(id)~iri]
+      - [ro:0000086, ex:charpy_thickness_$(id)~iri]
+      - [ro:0000086, ex:charpy_temperautre_$(id)~iri]
+      - [iao:0000235, ex:charpy_id_$(id)~iri] # denoted by
+      - [ro:0001000, ex:metal_$(metal_sheet)~iri] # derives from
 
 ############### [NOES] Longitudinal Direction #################
   charpy-longitudinal-direction:
@@ -30,8 +30,8 @@ mappings:
 
     po:
       - [a, noes:0000031] # a longitudinal direction
-      - [ro:0001015, ex:charpy_test_piece_$(id)] # location of
-      - [pmd:0000077, ex:charpy_angle_to_rd_$(id)] # has relational quality
+      - [ro:0001015, ex:charpy_test_piece_$(id)~iri] # location of
+      - [pmd:0000077, ex:charpy_angle_to_rd_$(id)~iri] # has relational quality
 
 ############### Information Content Entities #################
   charpy-id:
@@ -42,7 +42,7 @@ mappings:
 
     po:
       - [a, iao:0020000] # a identifier
-      - [iao:0000219, ex:charpy_test_piece_$(id)] # denotes
+      - [iao:0000219, ex:charpy_test_piece_$(id)~iri] # denotes
 
       - p: pmd:0000006 # has value
         o: $(id)
@@ -56,8 +56,8 @@ mappings:
 
     po:
       - [a, noes:0000160] # an angle to rolling direction
-      - [pmd:0025999, ex:rolling_direction_$(metal_sheet)] # is relational quality of
-      - [pmd:0000077, ex:svs_angle_to_rd_$(id)] # specified by value
+      - [pmd:0025999, ex:rolling_direction_$(metal_sheet)~iri] # is relational quality of
+      - [pmd:0000077, ex:svs_angle_to_rd_$(id)~iri] # specified by value
 
   charpy-length:
     sources:
@@ -67,8 +67,8 @@ mappings:
 
     po:
       - [a, pmd:0040001] # a length
-      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
-      - [pmd:0000077, ex:svs_lenght_$(id)] # specified by value svs length x
+      - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_lenght_$(id)~iri] # specified by value svs length x
 
   charpy-crosspiece:
     sources:
@@ -78,8 +78,8 @@ mappings:
 
     po:
       - [a, pmd:0040001] # a length
-      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
-      - [pmd:0000077, ex:svs_crosspiece_$(id)] # specified by value svs length x
+      - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_crosspiece_$(id)~iri] # specified by value svs length x
 
   charpy-width:
     sources:
@@ -89,8 +89,8 @@ mappings:
 
     po:
       - [a, pmd:0050154] # a width (Breite)
-      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
-      - [pmd:0000077, ex:svs_width_$(id)] # specified by value svs length x
+      - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_width_$(id)~iri] # specified by value svs length x
 
   charpy-thickness:
     sources:
@@ -100,8 +100,8 @@ mappings:
 
     po:
       - [a, pmd:0050153] # a Dicke
-      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of charpy test piece x
-      - [pmd:0000077, ex:svs_thickness_$(id)] # specified by value svs length x
+      - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of charpy test piece x
+      - [pmd:0000077, ex:svs_thickness_$(id)~iri] # specified by value svs length x
 
   charpy-temperatue:
     sources:
@@ -111,8 +111,8 @@ mappings:
 
     po:
       - [a, pmd:0000967] # a temperature
-      - [ro:0000080, ex:charpy_test_piece_$(id)] # quality of
-      - [pmd:0000077, ex:svs_temperature_$(id)] # specified by value
+      - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of
+      - [pmd:0000077, ex:svs_temperature_$(id)~iri] # specified by value
 #################### Realizable entities #####################
   charpy-kv2-750-5:
     sources:
@@ -122,8 +122,8 @@ mappings:
 
     po:
       - [a, pmd:0000848] # a mechanical property
-      - [pmd:0000077, ex:svs_KV2_750_5_$(id)] # specified by value
-      - [ro:0000052, ex:charpy_test_piece_$(id)] # characteristic of
+      - [pmd:0000077, ex:svs_KV2_750_5_$(id)~iri] # specified by value
+      - [ro:0000052, ex:charpy_test_piece_$(id)~iri] # characteristic of
 ############### Information Content Entities #################
   charpy-id:
     sources:
@@ -133,7 +133,7 @@ mappings:
 
     po:
       - [a, iao:0020000] # a identifier
-      - [iao:0000219, ex:charpy_test_piece_$(id)] # denotes
+      - [iao:0000219, ex:charpy_test_piece_$(id)~iri] # denotes
 
       - p: pmd:0000006 # has value
         o: $(id)
@@ -276,10 +276,10 @@ mappings:
     
     po:
       - [a, pmd:0000788] # an impact testing process (assay)
-      - [obi:0000293, ex:charpy_test_piece_$(id)] # has specified input charpy test piece
-      - [ro:0009006, ex:charpy_KV2_750_5_$(id)] # assay measures characteristic
-      - [bfo:0000199, ex:charpy_test_temporal_region_$(id)] # occupies temporal region
-      - [bfo:0000055, ex:charpy_test_plan_$(id)] # realizes
+      - [obi:0000293, ex:charpy_test_piece_$(id)~iri] # has specified input charpy test piece
+      - [ro:0009006, ex:charpy_KV2_750_5_$(id)~iri] # assay measures characteristic
+      - [bfo:0000199, ex:charpy_test_temporal_region_$(id)~iri] # occupies temporal region
+      - [bfo:0000055, ex:charpy_test_plan_$(id)~iri] # realizes
 ################# Test Piece Role #################
   charpy-test-piece-role:
     sources:
@@ -289,8 +289,8 @@ mappings:
 
     po:
       - [a, obi:0000067] # evaluant role
-      - [ro:0000081, ex:charpy_test_piece_$(id)] # role of charpy test piece
-      - [bfo:0000054, ex:charpy_test_$(id)] # has realization
+      - [ro:0000081, ex:charpy_test_piece_$(id)~iri] # role of charpy test piece
+      - [bfo:0000054, ex:charpy_test_$(id)~iri] # has realization
 
 ################## Plan and Spec ##################
   charpy-test-plan:
@@ -301,8 +301,8 @@ mappings:
 
     po:
       - [a, obi:0000260] # a plan
-      - [bfo:0000054, ex:charpy_test_$(id)] # realized in
-      - [ro:0000059, ex:charpy_test_spec] # concretizes
+      - [bfo:0000054, ex:charpy_test_$(id)~iri] # realized in
+      - [ro:0000059, ex:charpy_test_spec~iri] # concretizes
 
   charpy-test-spec:
     sources:
@@ -328,7 +328,7 @@ mappings:
 
     po:
       - [a, bfo:0000008] # temporal region
-      - [bfo:0000222, ex:charpy_test_start_$(id)] # has first instant
+      - [bfo:0000222, ex:charpy_test_start_$(id)~iri] # has first instant
 
   charpy-test-start:
     sources:
