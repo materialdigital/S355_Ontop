@@ -1,0 +1,24 @@
+PREFIX obi: <http://purl.obolibrary.org/obo/OBI_>
+PREFIX iao: <http://purl.obolibrary.org/obo/IAO_>
+PREFIX pmd: <https://w3id.org/pmd/co/PMD_>
+
+SELECT ?vs ?value ?unit
+WHERE {
+
+  # Numeric scalar value specifications
+  {
+    ?vs a obi:0001931 ;
+        obi:0001937 ?value ;
+        iao:0000039 ?unit .
+  }
+
+  UNION
+
+  # Date value specifications
+  {
+    ?vs a pmd:0001044 ;
+        obi:0002135 ?value .
+
+    BIND("no-unit" AS ?unit)
+  }
+}

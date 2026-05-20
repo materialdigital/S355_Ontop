@@ -1,12 +1,3 @@
-prefixes:
-  ex: "http://example.org/"
-  obi: "http://purl.obolibrary.org/obo/OBI_"
-  iao: "http://purl.obolibrary.org/obo/IAO_"  
-  qudt: "http://qudt.org/vocab/unit/"
-  xsd: "http://www.w3.org/2001/XMLSchema#"
-  pmd: "https://w3id.org/pmd/co/PMD_"
-  ro: "http://purl.obolibrary.org/obo/RO_"
-  bfo: "http://purl.obolibrary.org/obo/BFO_"
 mappings:
 ######################### Test Piece #########################
   tensile-test-piece:
@@ -25,12 +16,6 @@ mappings:
       - [ro:0000086, ex:width_$(id)] # has quality
       - [ro:0000086, ex:cross_section_area_mean_$(id)] # has quality (computed from the thickness and width values)
       - [ro:0000086, ex:original_gauge_length_$(id)] # has quality
-      #- [ro:0000086, ex:elongated_gauge_length_$(id)] # has quality
-      #- [ro:0000086, ex:final_thickness_$(id)] # has quality (a_u mm)
-      #- [ro:0000086, ex:final_width_$(id)] # has quality (b_u mm)
-      #- [ro:0000086, ex:min_cross_section_area_at_fracture_$(id)] # has quality (S_u mm2)
-      #- [ro:0000086, ex:elongation_of_fracture_$(id)] # has quality (A_percent)
-      #- [ro:0000086, ex:reduction_of_area_$(id)] # has quality (Z_percent)
       - [ro:0000086, ex:temperature_at_test_$(id)] # has quality (test_temp_c)
       - [ro:0000053, ex:force_UYS_$(id)] # has characteristic (F_eH kN) (Force Yield Strenght)
       - [ro:0000053, ex:maximum_force_$(id)] # has characteristic (F_M kN) (Maximum Force)
@@ -83,6 +68,17 @@ mappings:
       - p: pmd:0000006 # has value
         o: $(id)
         datatype: xsd:string
+
+  tensile-test-time-series:
+    sources:
+      - table: tensile_data
+
+    s: ex:tensile_test_time_series_$(id)
+
+    po:
+      - [a, pmd:0000992] # a time series
+      - [iao:0000136, ex:tensile_test_piece_$(id)] # is about 
+
 ######################### Qualities ##########################
   tensile-angle-to-rd:
     sources:
@@ -826,9 +822,9 @@ mappings:
       - [obi:0000293, ex:tensile_test_piece_$(id)] # has specified input
       - [obi:0000299, ex:maximum_force_md_$(id)] # has specified output
       - [obi:0000299, ex:force_UYS_md_$(id)] # has specified output
+      - [obi:0000299, ex:tensile_test_time_series_$(id)] # has specified output
       - [ro:0009006, ex:maximum_force_$(id)] # assay measures characteristic
       - [ro:0009006, ex:force_UYS_$(id)] # assay measures characteristic
-      # TODO: E-Modulus: output: the csv then some computing process that computes E-modulus from the data in the csv.
       
 ##################### Second Measurement Process #####################
   measure-after-test:
@@ -1027,7 +1023,7 @@ mappings:
       - [bfo:0000199, ex:comp_proc_e_modulus_temporal_region_$(id)] # occupies temporal region
       - [obi:0000293, ex:svs_original_gauge_length_$(id)] # has specified input
       - [obi:0000293, ex:svs_cross_section_area_mean_$(id)] # has specified input
-      # TODO: add time row somehow (reference to csv)
+      - [obi:0000293, ex:tensile_test_time_series_$(id)] # has specified input
       - [obi:0000299, ex:svs_e_modulus_$(id)]
 
 #################### Temporal Regions #####################  

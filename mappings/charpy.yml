@@ -1,14 +1,3 @@
-prefixes:
-  ex: "http://example.org/"
-  obi: "http://purl.obolibrary.org/obo/OBI_"
-  iao: "http://purl.obolibrary.org/obo/IAO_"  
-  qudt: "http://qudt.org/vocab/unit/"
-  xsd: "http://www.w3.org/2001/XMLSchema#"
-  pmd: "https://w3id.org/pmd/co/PMD_"
-  ro: "http://purl.obolibrary.org/obo/RO_"
-  bfo: "http://purl.obolibrary.org/obo/BFO_"
-  time: "http://www.w3.org/2006/time#"
-  noes: "https://w3id.org/pmd/noes/NOES_"
 mappings:
 ######################### Test Piece #########################
   charpy-test-piece:
@@ -23,7 +12,7 @@ mappings:
       - [bfo:0000108, ex:temporal_region_after_cutting_$(metal_sheet)] # exists at
       - [obi:0000312, ex:cutting_metal_$(metal_sheet)] # is specified output of
       - [iao:0000235, ex:charpy_id_$(id)] # denoted by
-      - [bfo:0000016, ex:charpy_KV2_750_5_$(id)] # has disposition
+      - [ro:0000091, ex:charpy_KV2_750_5_$(id)] # has disposition
       - [ro:0000086, ex:charpy_length_$(id)] # has quality
       - [ro:0000086, ex:charpy_crosspiece_length_$(id)]
       - [ro:0000086, ex:charpy_width_$(id)]
