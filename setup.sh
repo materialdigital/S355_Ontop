@@ -58,7 +58,7 @@ python3 --version
 echo ""
 echo "Installing Node.js dependencies..."
 
-npm install
+npm --prefix ./config install
 
 echo "Node.js dependencies installed."
 
@@ -99,7 +99,7 @@ pip install --upgrade pip
 echo ""
 echo "Installing Python dependencies..."
 
-pip install -r requirements.txt
+pip install -r config/requirements.txt
 
 echo "Python dependencies installed."
 
@@ -110,7 +110,7 @@ echo "Python dependencies installed."
 echo ""
 echo "Running final validation..."
 
-if ! npx yarrrml-parser --help >/dev/null 2>&1; then
+if ! npx --prefix ./config yarrrml-parser --help >/dev/null 2>&1; then
     echo "ERROR: yarrrml-parser is not working correctly."
     exit 1
 fi

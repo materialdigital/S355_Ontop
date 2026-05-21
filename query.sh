@@ -40,5 +40,5 @@ echo "Executing SPARQL query..."
 
 ./ontop-cli-5/ontop query \
     --mapping mappings/full_mapping.ttl \
-    --properties ontop.properties \
+    --properties config/ontop.properties \
     --query "$QUERY_FILE"
