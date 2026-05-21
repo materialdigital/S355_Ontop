@@ -58,7 +58,7 @@ node --version
 
 echo.
 echo - npm:
-npm --version
+call npm --version
 
 echo.
 echo - Python:

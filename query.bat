@@ -38,7 +38,7 @@ REM --------------------------------------------------
 echo Executing SPARQL query...
 
 call ontop-cli-5\ontop query ^
-    --mapping mappings\full_mapping.ttl ^
+    --mapping mappings/full_mapping.ttl ^
     --properties ontop.properties ^
     --query "%QUERY_FILE%"
 

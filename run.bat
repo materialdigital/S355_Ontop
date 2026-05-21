@@ -25,7 +25,7 @@ if errorlevel 1 exit /b 1
 
 echo parsing YARRRML files to create r2rml mapping...
 
-npx yarrrml-parser ^
+call npx yarrrml-parser ^
   -i mappings/sheet1.yml ^
   -i mappings/charpy.yml ^
   -i mappings/tensile.yml ^
