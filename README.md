@@ -71,11 +71,11 @@ pip install --upgrade pip
 ```
 followed by
 ```bash
-pip install -r requirements.txt
+pip install -r config/requirements.txt
 ```
 Once these steps were successful, running
 ```bash
-python createDB.py
+python python_scripts/createDB.py
 ```
 should produce a `s355.sql` file given the project structure as is.
 
@@ -102,11 +102,11 @@ To use Ontop as a SPARQL endpoint for the relational database, we need to provid
 We use the `yarrrml-parser` to produce this mapping out of the `.yml` files provided in `/mappings`.
 Since the `yarrrml-parser` is an npm package, it must first be installed via
 ```bash
-npm install
+npm --prefix ./config install
 ```
 With the `yarrrml-parser` installed, we can produce the R2RML mapping by running
 ```bash
-npx yarrrml-parser \
+npx --prefix ./config yarrrml-parser \
 	-i mappings/sheet1.yml \
 	-i mappings/charpy.yml \
 	-i mappings/tensile.yml \
@@ -121,7 +121,7 @@ For this, we run
 ```bash
 ./ontop-cli-5/ontop materialize \
 	--mapping mappings/full_mapping.ttl \
-	--properties ontop.properties \
+	--properties config/ontop.properties \
 	--output graph.ttl \
 	--format turtle 
 ```
@@ -135,7 +135,7 @@ We can write a SPARQL query, store it in some `.sparql` file and then run
 ```bash
 ./ontop-cli-5/ontop query \
   --mapping mappings/full_mapping.ttl \
-  --properties ontop.properties \
+  --properties config/ontop.properties \
   --query <location of .sparql file>
 ```
 
