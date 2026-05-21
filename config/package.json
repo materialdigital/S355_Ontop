@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "@rmlio/yarrrml-parser": "1.12.2"
+  }
+}

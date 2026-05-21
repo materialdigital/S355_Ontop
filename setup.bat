@@ -71,7 +71,7 @@ REM --------------------------------------------------
 echo.
 echo Installing Node.js dependencies...
 
-call npm install
+call npm --prefix ./config install
 if errorlevel 1 exit /b 1
 
 echo Node.js dependencies installed.
@@ -113,7 +113,7 @@ REM --------------------------------------------------
 echo.
 echo Installing Python dependencies...
 
-pip install -r requirements.txt
+pip install -r config/requirements.txt
 if errorlevel 1 exit /b 1
 
 echo Python dependencies installed.
@@ -125,7 +125,7 @@ REM --------------------------------------------------
 echo.
 echo Running final validation...
 
-call npx yarrrml-parser --help >nul 2>nul
+call npx --prefix ./config yarrrml-parser --help >nul 2>nul
 if errorlevel 1 (
     echo ERROR: yarrrml-parser is not working correctly.
     exit /b 1

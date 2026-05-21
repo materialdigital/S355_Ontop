@@ -5,7 +5,7 @@ echo creating sql-file...
 
 call ".venv\Scripts\activate.bat"
 
-python createDB.py
+python python_scripts/createDB.py
 if errorlevel 1 exit /b 1
 
 echo removing old H2 database...
@@ -25,7 +25,7 @@ if errorlevel 1 exit /b 1
 
 echo parsing YARRRML files to create r2rml mapping...
 
-call npx yarrrml-parser ^
+call npx --prefix ./config yarrrml-parser ^
   -i mappings/sheet1.yml ^
   -i mappings/charpy.yml ^
   -i mappings/tensile.yml ^
@@ -39,8 +39,10 @@ echo materializing graph with ontop...
 
 call ontop-cli-5\ontop materialize ^
   --mapping mappings/full_mapping.ttl ^
-  --properties ontop.properties ^
+  --properties config/ontop.properties ^
   --output graph.ttl ^
   --format turtle
+
+echo graph successfully materialized to graph.ttl
 
 if errorlevel 1 exit /b 1

@@ -39,7 +39,7 @@ echo Executing SPARQL query...
 
 call ontop-cli-5\ontop query ^
     --mapping mappings/full_mapping.ttl ^
-    --properties ontop.properties ^
+    --properties config/ontop.properties ^
     --query "%QUERY_FILE%"
 
 if errorlevel 1 exit /b 1
