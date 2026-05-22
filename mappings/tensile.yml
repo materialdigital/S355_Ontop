@@ -1092,7 +1092,7 @@ mappings:
     po:
       - [a, bfo:0000203] # temporal instant
 
-      - p:  timeLinXSDDateTime
+      - p:  time#inXSDDateTime
         o:  $(test_date)
         datatype: xsd:dateTime
 

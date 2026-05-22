@@ -17,8 +17,7 @@ mappings:
       - [ro:0000086, ex:charpy_crosspiece_length_$(id)~iri]
       - [ro:0000086, ex:charpy_width_$(id)~iri]
       - [ro:0000086, ex:charpy_thickness_$(id)~iri]
-      - [ro:0000086, ex:charpy_temperautre_$(id)~iri]
-      - [iao:0000235, ex:charpy_id_$(id)~iri] # denoted by
+      - [ro:0000086, ex:charpy_temperature_$(id)~iri]
       - [ro:0001000, ex:metal_$(metal_sheet)~iri] # derives from
 
 ############### [NOES] Longitudinal Direction #################
@@ -68,7 +67,7 @@ mappings:
     po:
       - [a, pmd:0040001] # a length
       - [ro:0000080, ex:charpy_test_piece_$(id)~iri] # quality of charpy test piece x
-      - [pmd:0000077, ex:svs_lenght_$(id)~iri] # specified by value svs length x
+      - [pmd:0000077, ex:svs_length_$(id)~iri] # specified by value svs length x
 
   charpy-crosspiece:
     sources:

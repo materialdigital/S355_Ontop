@@ -45,7 +45,7 @@ mappings:
 
     po: 
       - [a, pmd:0000614] # a dividing
-      - [obi:0000293, ex:metal_sheet1_before_cutting~iri]
+      - [obi:0000293, ex:metal_sheet1_before_cutting~iri] # has specified input
 # ------------------------------------------------------------------------------
   temporal-region-metal-sheet-1-before-cutting:
     sources:
