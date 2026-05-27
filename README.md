@@ -5,22 +5,22 @@ A demonstration of the S355 dataset mapped with YARRRML and accessed through Ont
 The following software must be installed and available in PATH:
 - Java 17+
 - Node.js 20+ (includes npm)
-- Python 3.10+
+- Python 3.10+ with pip
 
 ## Quick Start
 
 Linux/macOS:
 ```bash
-chmod +x setup.sh run.sh query.sh
+chmod +x setup.sh materialize.sh query.sh endpoint.sh
 ./setup.sh
-./run.sh
+./materialize.sh
 ./query.sh queries/example.sparql
 ```
 
 Windows:
 ```bat
 setup.bat
-run.bat
+materialize.bat
 query.bat queries\example.sparql
 ```
 ## Running the Pipeline
@@ -32,9 +32,9 @@ should be executed (for Windows users `setup.bat`). This checks the prerequisite
 installs the npm and Python dependencies, and creates a Python virtual environment. 
 After successful setup, the user should initially run
 ```bash
-./run.sh
+./materialize.sh
 ```
-once to produce the R2RML mapping (For Windows users `run.bat`). 
+once to produce the R2RML mapping (For Windows users `materialize.bat`). 
 During this step, the graph is also materialized into `graph.ttl`.
 
 Afterwards, Ontop can be used to query the H2 database via
@@ -139,3 +139,12 @@ We can write a SPARQL query, store it in some `.sparql` file and then run
   --query <location of .sparql file>
 ```
 
+### Using Ontop as a Virtual Knowledge Graph
+Ontop can be used as a virtual knowledge graph by using the `endpoint.sh` script (`endpoint.bat` on Windows).
+Alternatively we can run
+```bash
+./ontop-cli-5/ontop endpoint \
+	--mapping mappings/full_mapping.ttl \
+	--properties config/ontop.properties 
+```
+Afterwards the endpoint can be accessed on `localhost:8080`, e.g. by typing it as an url in the web browser.
